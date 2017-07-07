@@ -27,8 +27,8 @@ public class MapboxUnitySdkDependencies : AssetPostprocessor
 {
 #if UNITY_ANDROID
 	/// <summary>Instance of the PlayServicesSupport resolver</summary>
-	public static object svcSupport;
 #endif  // UNITY_ANDROID
+	public static object svcSupport;
 
 	/// Initializes static members of the class.
 	static MapboxUnitySdkDependencies()
