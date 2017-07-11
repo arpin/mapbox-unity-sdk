@@ -11,6 +11,10 @@
 	using UnityEditor.Build;
 	using System.Text;
 
+
+	/// <summary>
+	/// Simple pre-build script to check if there duplicate Android libraries
+	/// </summary>
 	public class PreBuildChecksEditor : IPreprocessBuild
 	{
 		public int callbackOrder { get { return 0; } }
@@ -22,7 +26,7 @@
 				return;
 			}
 
-			Debug.Log("Mapbox prebuild checks for target " + target + " at path " + path);
+			Debug.Log("Mapbox prebuild checks for target '" + target + "' at path '" + path + "'");
 
 			List<LibInfo> libInfo = new List<LibInfo>();
 			foreach (var file in Directory.GetFiles(Application.dataPath, "*.jar", SearchOption.AllDirectories))
@@ -63,6 +67,10 @@
 			{
 				FullPath = fullPath;
 				FullFileName = Path.GetFileName(fullPath);
+				// TODO: find a better way to extract base file name
+				// Mapbox telemetry lib uses different naming that other android libs
+				// <name>-<major>.<minor>.<patch> vs. <name>-<major>-<minor>-<patch>
+				// okio-1.13.0, support-v4-25.1.0 vs. mapbox-android-telemetry-2-1-0
 				BaseFileName = FullFileName.Substring(0, FullFileName.LastIndexOf("-"));
 				AssetPath = fullPath.Replace(Application.dataPath.Replace("Assets", ""), "");
 			}

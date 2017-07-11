@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 /// Sample dependencies file.  Change the class name and dependencies as required by your project, then
 /// save the file in a folder named Editor (which can be a sub-folder of your plugin).
@@ -33,7 +34,7 @@ public class MapboxUnitySdkDependencies : AssetPostprocessor
 	/// Initializes static members of the class.
 	static MapboxUnitySdkDependencies()
 	{
-
+		Debug.LogWarning("MapboxUnitySdkDependencies()");
 		//
 		//
 		// NOTE:
@@ -51,6 +52,8 @@ public class MapboxUnitySdkDependencies : AssetPostprocessor
 	/// </summary>
 	public static void RegisterDependencies()
 	{
+		Debug.LogWarning("RegisterDependencies()");
+
 #if UNITY_ANDROID
 		RegisterAndroidDependencies();
 #elif UNITY_IOS
@@ -63,15 +66,28 @@ public class MapboxUnitySdkDependencies : AssetPostprocessor
 	/// </summary>
 	public static void RegisterAndroidDependencies()
 	{
+		Debug.LogWarning("RegisterAndroidDependencies()");
 
 		// Setup the resolver using reflection as the module may not be
 		// available at compile time.
+
 		Type playServicesSupport = Google.VersionHandler.FindClass(
 			"Google.JarResolver"
 			, "Google.JarResolver.PlayServicesSupport"
 		);
+
+		// BergWerkGIS: above 'Google.VersionHandler.FindClass' searches through loaded assemblies
+		// for testing purposes we use the unity-jar-resolver source
+		if (null == playServicesSupport)
+		{
+			playServicesSupport = Type.GetType("Google.JarResolver.PlayServicesSupport");
+		}
+
+
+
 		if (playServicesSupport == null)
 		{
+			Debug.LogWarning("playServicesSupport == null");
 			return;
 		}
 		svcSupport = svcSupport ?? Google.VersionHandler.InvokeStaticMethod(
