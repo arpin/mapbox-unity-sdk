@@ -139,5 +139,18 @@ namespace Mapbox.Unity.MeshGeneration
 				factory.Unregister(unityTile);
 			}
 		}
+
+        public void DestroyAllTiles() {
+            foreach (KeyValuePair<UnwrappedTileId, UnityTile> kv in _activeTiles) {
+                kv.Value.Recycle();
+                GameObject.Destroy(kv.Value.gameObject);
+            }
+            foreach (UnityTile tile in _inactiveTiles)
+            {
+                GameObject.Destroy(tile.gameObject);
+            }
+            _activeTiles.Clear();
+            _inactiveTiles.Clear();
+        }
 	}
 }
