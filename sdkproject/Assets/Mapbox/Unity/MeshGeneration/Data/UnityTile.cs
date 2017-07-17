@@ -90,6 +90,12 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			}
 		}
 
+		public double MeshScale {
+			get {
+				return 1 / Mathd.Abs(this.Rect.Max.x);
+			}
+		}
+
 		public TilePropertyState RasterDataState { get; set; }
 		public TilePropertyState HeightDataState { get; set; }
 		public TilePropertyState VectorDataState { get; set; }
@@ -107,6 +113,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 			gameObject.name = tileId.ToString();
 			var position = new Vector3((float)(_rect.Center.x - map.CenterMercator.x), 0, (float)(_rect.Center.y - map.CenterMercator.y));
 			transform.localPosition = position;
+			transform.localScale = new Vector3(1 / (float)MeshScale, 1, 1 / (float)MeshScale);
 			gameObject.SetActive(true);
 		}
 

@@ -63,6 +63,7 @@ namespace Mapbox.Unity.MeshGeneration.Interfaces
         {
             _container = new GameObject(Key + " Container");
             _container.transform.SetParent(tile.transform, false);
+            _container.transform.localScale = new Vector3(1 * (float)tile.MeshScale, 1, 1 * (float)tile.MeshScale);
 
             //testing each feature with filters
             var fc = layer.FeatureCount();

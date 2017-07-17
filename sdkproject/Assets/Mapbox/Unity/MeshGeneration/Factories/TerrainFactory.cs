@@ -123,13 +123,13 @@ namespace Mapbox.Unity.MeshGeneration.Factories
 				{
 					var xrat = x / (_sampleCount - 1);
 
-					var xx = Mathd.Lerp(tile.Rect.Min.x, tile.Rect.Max.x, xrat);
-					var yy = Mathd.Lerp(tile.Rect.Min.y, tile.Rect.Max.y, yrat);
+					var xx = Mathd.Lerp(tile.Rect.Min.x * tile.MeshScale, tile.Rect.Max.x * tile.MeshScale, xrat);
+					var yy = Mathd.Lerp(tile.Rect.Min.y * tile.MeshScale, tile.Rect.Max.y * tile.MeshScale, yrat);
 
 					_newVertexList.Add(new Vector3(
-						(float)(xx - tile.Rect.Center.x),
+						(float)(xx - tile.Rect.Center.x * tile.MeshScale),
 						0,
-						(float)(yy - tile.Rect.Center.y)));
+						(float)(yy - tile.Rect.Center.y * tile.MeshScale)));
 					_newNormalList.Add(Unity.Constants.Math.Vector3Up);
 					_newUvList.Add(new Vector2(x * 1f / (_sampleCount - 1), 1 - (y * 1f / (_sampleCount - 1))));
 				}
