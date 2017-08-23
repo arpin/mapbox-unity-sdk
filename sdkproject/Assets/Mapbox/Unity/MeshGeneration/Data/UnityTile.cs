@@ -92,7 +92,7 @@ namespace Mapbox.Unity.MeshGeneration.Data
 
 		public double MeshScale {
 			get {
-				return 1 / Mathd.Abs(this.Rect.Max.x);
+				return 1 / Mathd.Abs(this.Rect.Size.x);
 			}
 		}
 
